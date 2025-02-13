@@ -83,13 +83,14 @@ class TaskController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'sometimes|required|string|max:255',
             'list_id' => 'sometimes|required|integer',
+            'isCompleted' => 'sometimes|required',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $task->update($request->only(['title', 'urgent_level', 'list_id']));
+        $task->update($request->only(['title', 'urgent_level', 'list_id', 'isCompleted']));
 
         return response()->json(['message' => 'Tugas berhasil diperbarui', 'data' => $task], 200);
     }
